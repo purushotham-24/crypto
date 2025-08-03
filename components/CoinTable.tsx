@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import CoinRow from "./CoinRow"; // or wherever it's located
-import { Coin } from "@/types"; // if you have a shared type
+import { Coin } from "@/types";
+
 
 interface CoinTableProps {
   coins: Coin[];
