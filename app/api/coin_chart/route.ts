@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 
-const cache = new Map<string, { data: any; timestamp: number }>();
+interface ChartCacheData {
+  prices: [number, number][];
+}
+const cache = new Map<string, { data: ChartCacheData; timestamp: number }>();
 const CACHE_DURATION_MS = 30 * 1000; // 30 seconds
 
 export async function GET(request: Request) {

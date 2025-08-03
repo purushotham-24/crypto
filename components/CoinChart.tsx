@@ -17,7 +17,16 @@ ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip,
 
 type Props = {
   coinId: string;
-};
+}
+
+export interface ChartPrice {
+  time: string;
+  value: number;
+}
+
+export interface ChartData {
+  prices: [number, number][];
+}
 
 const ranges: { [key: string]: string } = {
   "24h": "1",
@@ -28,7 +37,16 @@ const ranges: { [key: string]: string } = {
 
 export default function CoinChart({ coinId }: Props) {
   const [range, setRange] = useState<"24h" | "7d" | "30d" | "90d">("7d");
-  const [chartData, setChartData] = useState<any>(null);
+  const [chartData, setChartData] = useState<{
+    labels: string[];
+    datasets: Array<{
+      label: string;
+      data: number[];
+      borderColor: string;
+      backgroundColor: string;
+      fill: boolean;
+    }>;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -66,7 +84,7 @@ export default function CoinChart({ coinId }: Props) {
           setLoading(false);
           return;
         }
-        const prices = data.prices.map((item: number[]) => ({
+        const prices: ChartPrice[] = data.prices.map((item: [number, number]) => ({
           time: new Date(item[0]).toLocaleDateString("en-US", {
             month: "short",
             day: "numeric",
@@ -74,11 +92,11 @@ export default function CoinChart({ coinId }: Props) {
           value: item[1],
         }));
         setChartData({
-          labels: prices.map((p: any) => p.time),
+          labels: prices.map((p) => p.time),
           datasets: [
             {
               label: "Price (USD)",
-              data: prices.map((p: any) => p.value),
+              data: prices.map((p) => p.value),
               borderColor: "rgb(53, 162, 235)",
               backgroundColor: "rgba(53, 162, 235, 0.5)",
               fill: true,

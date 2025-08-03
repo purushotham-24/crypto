@@ -1,12 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import CoinChart from "@/components/CoinChart";
 
 export default function CoinDetailPage() {
   const { id } = useParams();
-  const [coin, setCoin] = useState<any>(null);
+  interface CoinImage {
+    large?: string;
+  }
+  interface CoinMarketData {
+    current_price: { usd: number };
+    market_cap: { usd: number };
+    price_change_percentage_24h: number;
+  }
+  interface Coin {
+    id: string;
+    name: string;
+    symbol: string;
+    image?: CoinImage;
+    market_data?: CoinMarketData;
+  }
+  const [coin, setCoin] = useState<Coin | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -58,8 +74,8 @@ export default function CoinDetailPage() {
   return (
     <div className="p-6 max-w-3xl mx-auto">
       <div className="flex items-center gap-4 mb-4">
-        {coin?.image?.large ? (
-          <img src={coin.image.large} alt={coin.name || "Coin"} width={50} height={50} />
+        {coin.image && coin.image.large ? (
+          <Image src={coin.image.large} alt={coin.name || "Coin"} width={50} height={50} />
         ) : (
           <div className="w-[50px] h-[50px] bg-gray-200 flex items-center justify-center rounded">
             <span className="text-gray-500 text-xs">No Image</span>

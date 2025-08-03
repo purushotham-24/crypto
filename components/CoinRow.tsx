@@ -2,10 +2,22 @@
 
 import { Star, StarOff } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useWatchlist } from "@/context/WatchlistContext";
 
+interface Coin {
+  id: string;
+  name: string;
+  symbol: string;
+  image: string;
+  current_price: number;
+  price_change_percentage_24h: number;
+  market_cap: number;
+  total_volume: number;
+}
+
 interface CoinRowProps {
-  coin: any;
+  coin: Coin;
   index: number;
 }
 
@@ -20,7 +32,7 @@ export default function CoinRow({ coin, index }: CoinRowProps) {
     <tr className="border-b hover:bg-gray-100">
       <td className="p-2">{index + 1}</td>
       <td className="p-2 flex items-center gap-2">
-        <img src={coin.image} alt={coin.name} width={20} height={20} />
+        <Image src={coin.image} alt={coin.name} width={20} height={20} />
         <Link href={`/coin/${coin.id}`}>
           <span className="hover:underline text-blue-600 cursor-pointer">
             {coin.name}
