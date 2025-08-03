@@ -33,12 +33,10 @@ export default function CoinRow({ coin, index }: CoinRowProps) {
       <td className="p-2">{index + 1}</td>
       <td className="p-2 flex items-center gap-2">
         <Image src={coin.image} alt={coin.name} width={20} height={20} />
-        <Link href={`/coin/${coin.id}`}>
-          <span className="hover:underline text-blue-600 cursor-pointer">
-            {coin.name}
-          </span>
-        </Link>{" "}
-        ({coin.symbol.toUpperCase()})
+        <Link href={`/coin/${coin.id}`} className="text-blue-600 hover:underline">
+          {coin.name}
+        </Link>
+        <span className="text-gray-500 text-sm">({coin.symbol.toUpperCase()})</span>
       </td>
       <td className="p-2">${coin.current_price.toLocaleString()}</td>
       <td

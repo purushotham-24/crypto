@@ -1,39 +1,31 @@
-// CoinRow.tsx
 "use client";
-export default function CoinRow() {
-  return <div>CoinRow placeholder</div>;
+import React from "react";
+import CoinRow from "./CoinRow"; // or wherever it's located
+import { Coin } from "@/types"; // if you have a shared type
+
+interface CoinTableProps {
+  coins: Coin[];
 }
 
-// SearchBar.tsx
-"use client";
-export default function SearchBar() {
-  return <input placeholder="Search..." className="border p-2 rounded" />;
-}
-
-// Filters.tsx
-"use client";
-export default function Filters() {
-  return <div className="flex gap-4">Filters go here</div>;
-}
-
-// Chart.tsx
-"use client";
-export default function Chart() {
-  return <div className="w-full h-64 bg-gray-100 rounded">Chart component</div>;
-}
-
-// LoadingSkeleton.tsx
-"use client";
-export default function LoadingSkeleton() {
-  return <div className="animate-pulse h-6 bg-gray-300 rounded w-1/2 mx-auto my-4" />;
-}
-
-// StarButton.tsx
-"use client";
-export default function StarButton({ active }: { active: boolean }) {
+export default function CoinTable({ coins }: CoinTableProps) {
   return (
-    <button className={`text-xl ${active ? "text-yellow-500" : "text-gray-400"}`}>
-      {active ? "★" : "☆"}
-    </button>
+    <table className="w-full table-auto">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Coin</th>
+          <th>Price</th>
+          <th>24h %</th>
+          <th>Market Cap</th>
+          <th>Volume</th>
+          <th>Watchlist</th>
+        </tr>
+      </thead>
+      <tbody>
+        {coins.map((coin, index) => (
+          <CoinRow key={coin.id} coin={coin} index={index} />
+        ))}
+      </tbody>
+    </table>
   );
 }
