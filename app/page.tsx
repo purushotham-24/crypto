@@ -6,9 +6,21 @@ import { useWatchlist } from "@/context/WatchlistContext";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
+// ✅ Define Coin type
+type Coin = {
+  id: string;
+  name: string;
+  symbol: string;
+  image: string;
+  current_price: number;
+  price_change_percentage_24h: number;
+  market_cap: number;
+  total_volume: number;
+};
+
 export default function HomePage() {
   const { watchlist, addToWatchlist, removeFromWatchlist } = useWatchlist();
-  const [coins, setCoins] = useState([]);
+  const [coins, setCoins] = useState<Coin[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
@@ -64,7 +76,6 @@ export default function HomePage() {
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      {/* ✅ Added overflow-x for mobile scrolling */}
       <div className="overflow-x-auto">
         <table className="w-full table-auto text-sm border">
           <thead>
